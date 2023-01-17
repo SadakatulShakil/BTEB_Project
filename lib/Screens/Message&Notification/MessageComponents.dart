@@ -778,6 +778,85 @@ class InitState extends State<MessageComponents> {
     }
   }
 
+  void OpenUserDialog(List<dynamic> searchedUserList) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Searched User'),
+            content: Container(
+              // Change as per your requirement
+              height: 250,
+              width: MediaQuery.of(context).size.width / 3,
+              child: Column(
+                children: [
+                  Container(
+                    height: 220,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: searchedUserList.length,
+                        itemBuilder: (context, index) {
+                          final mSearchData = searchedUserList[index];
+
+                          return buildSearchEvent(mSearchData);
+                        }),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget buildSearchEvent(mSearchData) => GestureDetector(
+      onTap: () {
+        /// do click item task
+        Navigator.pop(context, false);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OtherProfileBody(
+                    'search', userid, mSearchData.id.toString())));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(left: 12.0, right: 12, top: 5, bottom: 8),
+        padding: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.black12)),
+        child: Row(
+          children: [
+            FadeInImage.assetNetwork(
+                placeholder: 'assets/images/chat_head.jpg',
+                image: mSearchData.profileimageurl.toString(),
+                height: 40,
+                width: 40,
+                fit: BoxFit.cover),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Text(mSearchData.fullname.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: GoogleFonts.nanumGothic(
+                              color: Colors.black,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ));
+
   Future checkconnectivity() async {
     var connectivityResult = await connectivity.checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile ||

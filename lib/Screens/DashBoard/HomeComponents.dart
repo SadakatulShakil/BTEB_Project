@@ -186,7 +186,7 @@ class InitState extends State<HomeComponents> {
     await networkCall.BadgesResponseCall(token, userId);
     if (badgesData != null) {
       badgesDataList = badgesData.badges!;
-
+      setState(() {});
     } else {
       CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -213,7 +213,7 @@ class InitState extends State<HomeComponents> {
     await networkCall.UserCoursesListCall(token, userId);
     if (userCoursesData != null) {
       courseList = userCoursesData;
-
+      setState(() {});
     } else {
       CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
