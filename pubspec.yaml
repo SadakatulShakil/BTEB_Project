@@ -49,15 +49,12 @@ dependencies:
   fluttertoast: ^8.0.8
   custom_radio_group_list: ^1.0.0
   flutter_html: ^2.0.0
-  google_nav_bar: ^5.0.6
   convex_bottom_bar: ^3.1.0+1
-  advance_pdf_viewer: ^2.0.1
-  syncfusion_flutter_pdfviewer: ^20.3.50
-  power_file_view: ^1.0.1
   path_provider: ^2.0.11
   flutter_file_downloader: ^1.1.0+1
   audioplayers: ^1.1.1
   just_audio: ^0.9.29
+  power_file_view: ^1.0.1
   html_unescape: ^2.0.0
   table_calendar: ^3.0.8
   getwidget: ^3.0.1

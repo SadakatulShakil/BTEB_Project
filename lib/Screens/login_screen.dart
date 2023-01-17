@@ -28,11 +28,10 @@ class _LoginScreenState extends State<LoginScreen>{
   @override
   void initState() {
     _passwordVisible = false;
-    setState(() {
-      userNameController = TextEditingController();
-      passwordController = TextEditingController();
-      getSharedData();
-    });
+    userNameController = TextEditingController();
+    passwordController = TextEditingController();
+    getSharedData();
+
   }
 
   @override
@@ -110,8 +109,9 @@ class _LoginScreenState extends State<LoginScreen>{
                                   ),
                                   onPressed: () {
                                     // Update the state i.e. toogle the state of passwordVisible variable
+                                    _passwordVisible = !_passwordVisible;
                                     setState(() {
-                                      _passwordVisible = !_passwordVisible;
+
                                     });
                                   },
                                 ),
@@ -244,11 +244,10 @@ class _LoginScreenState extends State<LoginScreen>{
     if(loginresponseData != null){
       if (loginresponseData.token.toString() == 'null') {
         CommonOperation.hideProgressDialog(context);
-        setState(() {});
         error = 1;
-        //showToastMessage(loginresponseData.error.toString());
-        print('error '+ loginresponseData.errorcode.toString());
+        setState(() {
 
+        });
       }
       else{
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -258,10 +257,7 @@ class _LoginScreenState extends State<LoginScreen>{
         print('token data'+ loginresponseData.token.toString());
         await prefs.setString('TOKEN', loginresponseData.token.toString());
         CommonOperation.hideProgressDialog(context);
-        //showToastMessage(message);
-        setState(() {
-          callUserSiteDetail(loginresponseData.token.toString());
-        });
+        callUserSiteDetail(loginresponseData.token.toString());
       }
     }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -272,7 +268,6 @@ class _LoginScreenState extends State<LoginScreen>{
   }
 
   void callUserSiteDetail(String token) async{
-
     CommonOperation.showProgressDialog(
         context, "loading", true);
     final userDetailsData = await networkCall.UserDetailsCall(token);
@@ -285,17 +280,12 @@ class _LoginScreenState extends State<LoginScreen>{
       await prefs.setString('imageUrl', userDetailsData.userpictureurl.toString());
       await prefs.setString('name', userDetailsData.fullname.toString());
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
-      setState(() {
-        //getURNotification(token, userDetailsData.userid.toString());
-        name = userDetailsData.fullname.toString();
-        imageUrl = userDetailsData.userpictureurl.toString();
-        userId = userDetailsData.userid.toString();
-        Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => HomeScreen()
-        ));
-      });
-
+      name = userDetailsData.fullname.toString();
+      imageUrl = userDetailsData.userpictureurl.toString();
+      userId = userDetailsData.userid.toString();
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => HomeScreen()
+      ));
     }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
@@ -307,10 +297,6 @@ class _LoginScreenState extends State<LoginScreen>{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userNameController.text = prefs.getString('userName')!;
     passwordController.text = prefs.getString('password')!;
-    setState(() {
-      //getEventsData(token);
-      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
   }
 
 }

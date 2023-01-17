@@ -56,17 +56,10 @@ class InitState extends State<CourseDetailsPage> {
   void initState() {
     // TODO: implement initState
     checkconnectivity();
-    // print('--------->  '+widget.mCourseData.summary.toString());
-    // dom.Document document2 = parse(HtmlUnescape().convert(widget.mCourseData.summary.toString()));
-    // content1 = document2.getElementsByTagName('span')[0].innerHtml.toString();
-    // content2 = document2.getElementsByTagName('strong')[1].innerHtml.toString();
-    // print('data_content_html ' + content1.toString());
-    // print('data_content_html ' + content2.toString());
-    //getSharedData();
-    //setAudio();
+
     audioPlayer.onPlayerStateChanged.listen((state) {
+      isPlaying = state == PlayerState.playing;
       setState(() {
-        isPlaying = state == PlayerState.playing;
       });
     });
     super.initState();
@@ -269,12 +262,10 @@ class InitState extends State<CourseDetailsPage> {
   void getSharedData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
-    setState(() {
-      getCourseContent(token, widget.mCourseData.id.toString());
-    });
+    Future.wait([getCourseContent(token, widget.mCourseData.id.toString()),]);
   }
 
-  void getCourseContent(String token, String courseId) async {
+  Future getCourseContent(String token, String courseId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final userCourseContentData =
     await networkCall.CourseContentCall(token, courseId);
@@ -284,9 +275,11 @@ class InitState extends State<CourseDetailsPage> {
       courseContentList = userCourseContentData;
       print('data_content ' + courseContentList.first.name.toString());
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
-      setState(() {});
+      setState(() {
+
+      });
     } else {
+      CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
       showToastMessage('your session is expire ');
@@ -332,13 +325,16 @@ class InitState extends State<CourseDetailsPage> {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        courseContentList[index].name.toString(),
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width-30,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          courseContentList[index].name.toString(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     )
                                   ],
@@ -400,16 +396,17 @@ class InitState extends State<CourseDetailsPage> {
                 ),
               ),
               onTap: () {
+                if (showSub == index) {
+                  showSub = -1;
+                  showContact = -1;
+                  showMap = -1;
+                } else {
+                  showSub = index;
+                  showContact = -1;
+                  showMap = -1;
+                }
                 setState(() {
-                  if (showSub == index) {
-                    showSub = -1;
-                    showContact = -1;
-                    showMap = -1;
-                  } else {
-                    showSub = index;
-                    showContact = -1;
-                    showMap = -1;
-                  }
+
                 });
               });
         });
@@ -604,6 +601,10 @@ class InitState extends State<CourseDetailsPage> {
                             courseContentList[sub_index]
                                 .modules[index]
                                 .modname !=
+                                "customcert"&&
+                            courseContentList[sub_index]
+                                .modules[index]
+                                .modname !=
                                 "book"
                             ? Row(
                           children: [
@@ -684,8 +685,7 @@ class InitState extends State<CourseDetailsPage> {
                                          MaterialPageRoute(
                                              builder: (context) =>
                                                  BookContentPage(
-                                                     courseContentList[sub_index].modules[index].contents, token, courseContentList[sub_index].modules[index].name.toString()
-                                                 ))):
+                                                     courseContentList[sub_index].modules[index].contents, token, courseContentList[sub_index].modules[index].name, courseContentList[sub_index].modules[index].id.toString()))):
                                      courseContentList[sub_index].modules[index]
                                          .modname ==
                                          "label" ? findVideoUrl(courseContentList[sub_index].modules[index].description.toString(), courseContentList[sub_index].modules[index].name.toString())
@@ -693,6 +693,11 @@ class InitState extends State<CourseDetailsPage> {
                                          .modname ==
                                          "forum" ? OpenDialog(courseContentList[sub_index].modules[index]
                                          .name.toString(), 'No description Yet!'):courseContentList[sub_index].modules[index]
+                                         .modname ==
+                                         "customcert" ? courseContentList[sub_index].modules[index].completion == 1 || courseContentList[sub_index].modules[index].completion == 2 && courseContentList[sub_index]
+                                         .modules[index]
+                                         .completiondata
+                                         .state.toString() == '0'?OpenCertificateDialog('Please Complete all the course first', context):print('go to certificate Activity'):courseContentList[sub_index].modules[index]
                                          .modname ==
                                          "page" ? Container():
                                                       print("Not assignment clicked !");
@@ -731,16 +736,15 @@ class InitState extends State<CourseDetailsPage> {
                 ),
                 onTap: () {
                   //on tap task
+                  if (showContact == index) {
+                    showContact = -1;
+                    showMap = -1;
+                  } else {
+                    showContact = index;
+                    showMap = -1;
+                  }
                   setState(() {
-                    if (showContact == index) {
-                      showContact = -1;
-                      showMap = -1;
-                    } else {
-                      showContact = index;
-                      showMap = -1;
-                    }
 
-                    // sublist2(sub_index, index);
                   });
                 }),
           );
@@ -957,8 +961,8 @@ class InitState extends State<CourseDetailsPage> {
                           //await audioPlayer.resume();
                           //await audioPlayer.setSourceUrl(url);
                         }
+                        print('checkIsPlaying ' + isPlaying.toString());
                         setState(() {
-                          print('checkIsPlaying ' + isPlaying.toString());
                           //setAudio();
                         });
                       },
@@ -1074,18 +1078,81 @@ class InitState extends State<CourseDetailsPage> {
                 VideoContentStanding(mainUrl, name)));
   }
 
-  activityView(String pageid) async{
-    dynamic activityViewData =
-    await networkCall.activityViewCall(token, pageid);
-    if (activityViewData != null) {
-      print("View succesfully");
-      setState(() {
-
-      });
-    } else {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoged', false);
-      showToastMessage('your session is expire ');
-    }
+  // activityView(String pageid) async{
+  //   dynamic activityViewData =
+  //   await networkCall.activityViewCall(token, pageid);
+  //   if (activityViewData != null) {
+  //     print("View succesfully");
+  //     setState(() {
+  //
+  //     });
+  //   } else {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     await prefs.setBool('isLoged', false);
+  //     showToastMessage('your session is expire ');
+  //   }
+  // }
+  OpenCertificateDialog(String message, BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 25,top: 45
+                      + 25, right: 25,bottom: 25
+                  ),
+                  margin: EdgeInsets.only(top: 45),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(color: Colors.black,offset: Offset(0,10),
+                            blurRadius: 10
+                        ),
+                      ]
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text('Certificate Alert !',style: TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
+                      SizedBox(height: 15,),
+                      Text(message,style: TextStyle(fontSize: 14),textAlign: TextAlign.center,),
+                      SizedBox(height: 22,),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: TextButton(
+                            onPressed: (){
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Ok',style: TextStyle(fontSize: 18),)),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  left: 25,
+                  right: 25,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 45,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(45)),
+                        child: Image.asset("assets/images/alert_icon1.png")
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
+
 }

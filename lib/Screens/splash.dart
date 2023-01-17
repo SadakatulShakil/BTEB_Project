@@ -21,11 +21,7 @@ class _SplashState extends State<Splash> {
     // TODO: implement initState
     print("running splash");
     super.initState();
-
     getSharedData();
-    setState(() {
-
-    });
   }
 
   startTimer(String isLog) async{
@@ -110,8 +106,6 @@ class _SplashState extends State<Splash> {
     print('?????????  '+widget.isLog.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     widget.isLog = await prefs.getString('isLoged').toString();
-    setState(() {
-    });
     startTimer(widget.isLog);
   }
 

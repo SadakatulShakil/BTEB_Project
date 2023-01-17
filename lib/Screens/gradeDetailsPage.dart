@@ -174,22 +174,17 @@ class InitState extends State<GradesDetailsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
+    Future.wait([getGradeContent(token, widget.mGradeData.id.toString(), userId)]);
   }
 
-  void getGradeContent(String token, String courseId, String userId) async {
+  Future getGradeContent(String token, String courseId, String userId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final userGradeDetailsData =
         await networkCall.GradesDetailsCall(token, courseId, userId);
     if (userGradeDetailsData != null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
       gradeDetailsList = userGradeDetailsData.usergrades![0].gradeitems!;
       print('data_content ' + gradeDetailsList.first.itemname.toString());
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       setState(() {});
     } else {
       CommonOperation.hideProgressDialog(context);

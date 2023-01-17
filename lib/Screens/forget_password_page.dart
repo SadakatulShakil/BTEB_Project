@@ -19,10 +19,7 @@ String token ='';
 NetworkCall networkCall = NetworkCall();
   @override
   void initState() {
-
-    setState(() {
     getSharedData();
-    });
   }
 
   @override

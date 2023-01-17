@@ -468,9 +468,7 @@ class InitState extends State<AssignmentDetailsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getAssignmentContent(token, widget.courseId.toString());
-    });
+    Future.wait([getAssignmentContent(token, widget.courseId.toString()), getAssignmentDetails(token, widget.assignmentId)]);
   }
 
   void showToastMessage(String message) {
@@ -489,7 +487,7 @@ class InitState extends State<AssignmentDetailsPage> {
     return DateTime.fromMillisecondsSinceEpoch(timeNumber * 1000).toString();
   }
 
-  void getAssignmentContent(String token, String courseid) async{
+  Future getAssignmentContent(String token, String courseid) async{
     CommonOperation.showProgressDialog(context, "loading", true);
     final assignmentData =
     await networkCall.CourseAssignmentCall(token, courseid);
@@ -503,12 +501,9 @@ class InitState extends State<AssignmentDetailsPage> {
           print('------>intro '+ assignmentIntroList[i].intro.toString());
         }
       }
-      //print('data_content ' + gradeDetailsList.first.itemname.toString());
       CommonOperation.hideProgressDialog(context);
       showToastMessage(message);
-      setState(() {
-        getAssignmentDetails(token, widget.assignmentId);
-      });
+      setState(() {});
     } else {
       CommonOperation.hideProgressDialog(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -517,15 +512,13 @@ class InitState extends State<AssignmentDetailsPage> {
     }
 
   }
-  void getAssignmentDetails(String token, String assignmentId) async {
+  Future getAssignmentDetails(String token, String assignmentId) async {
     CommonOperation.showProgressDialog(context, "loading", true);
     final assignmentDetailsData =
     await networkCall.AssignmentDetailsCall(token, assignmentId);
     if (assignmentDetailsData != null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
-      //gradeDetailsList = userGradeDetailsData.usergrades![0].gradeitems!;
-      //print('data_content ' + assignmentDetailsData.lastattempt!.submission!.status.toString());
       submissionStatus = assignmentDetailsData.lastattempt!.submission!.status.toString();
       gradingStatus = assignmentDetailsData.lastattempt!.gradingstatus.toString();
       lastDateSubmission = assignmentDetailsData.lastattempt!.submission!.timemodified.toString();
@@ -548,7 +541,6 @@ class InitState extends State<AssignmentDetailsPage> {
           }
         }
       }
-
       CommonOperation.hideProgressDialog(context);
       showToastMessage(message);
       setState(() {});

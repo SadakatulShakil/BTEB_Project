@@ -1,9 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:power_file_view/power_file_view.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 class PdfViwerPage extends StatefulWidget{
   String downloadUrl, downloadPath;
@@ -16,7 +11,7 @@ class PdfViwerPage extends StatefulWidget{
 class InitState extends State<PdfViwerPage> {
   bool isLoading = true;
   String savePath ='';
-  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+  //final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
   @override
   void initState() {

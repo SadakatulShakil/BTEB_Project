@@ -28,9 +28,6 @@ class InitState extends State<DashBoardGradesList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      getSharedData();
-    });
   }
 
   @override
@@ -72,54 +69,6 @@ class InitState extends State<DashBoardGradesList> {
                 ),
               ));
   }
-
-  void getSharedData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('TOKEN')!;
-    String userid = prefs.getString('userId')!;
-    setState(() {
-      // getAllCourses(token, userid);
-      // getCoursesGrade(token);
-    });
-  }
-
-  // void getAllCourses(String token, String userId) async {
-  //   CommonOperation.showProgressDialog(context, "loading", true);
-  //   final userCoursesData =
-  //       await networkCall.UserCoursesListCall(token, userId);
-  //   if (userCoursesData != null) {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String message = 'Success2';
-  //     courseList = userCoursesData;
-  //     //count = courseList.length.toString();
-  //     print('data_count1 ' + courseList.first.toString());
-  //     //showToastMessage(message);
-  //     CommonOperation.hideProgressDialog(context);
-  //     setState(() {});
-  //   } else {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('isLoged', false);
-  //     showToastMessage('your session is expire ');
-  //   }
-  // }
-  //
-  // void getCoursesGrade(String token) async {
-  //   CommonOperation.showProgressDialog(context, "loading", true);
-  //   final gradeListData = await networkCall.GradesCountCall(token);
-  //   if (gradeListData != null) {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String message = 'Success2';
-  //     //showToastMessage(message);
-  //     CommonOperation.hideProgressDialog(context);
-  //     gradeList = gradeListData.grades!;
-  //     print('-----> ' + gradeList.first.courseid.toString());
-  //     setState(() {});
-  //   } else {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('isLoged', false);
-  //     showToastMessage('your session is expire ');
-  //   }
-  // }
 
   String getDateStump(String sTime) {
     int timeNumber = int.parse(sTime);

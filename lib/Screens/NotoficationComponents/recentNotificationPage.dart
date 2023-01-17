@@ -146,9 +146,6 @@ class InitState extends State<RecentNotificationPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      //getGradeContent(token, widget.mGradeData.id.toString(), userId);
-    });
   }
 
 

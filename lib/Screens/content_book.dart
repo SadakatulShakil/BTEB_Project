@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:radda_moodle_learning/Helper/colors_class.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../ApiCall/HttpNetworkCall.dart';
 
 class BookContentPage extends StatefulWidget {
   List<dynamic> bookContent;
-  String token, title;
-  BookContentPage(this.bookContent, this.token, this.title);
+  String token, title, id;
+  BookContentPage(this.bookContent, this.token, this.title, this.id);
 
 
 
@@ -15,6 +19,13 @@ class BookContentPage extends StatefulWidget {
 }
 
 class InitState extends State<BookContentPage> {
+  NetworkCall networkCall = NetworkCall();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ViewActivity(widget.id, widget.token);
+  }
   @override
   Widget build(BuildContext context) {
     return initWidget(context);
@@ -107,5 +118,28 @@ class InitState extends State<BookContentPage> {
   String getDateStump(String sTime) {
     int timeNumber = int.parse(sTime);
     return DateTime.fromMillisecondsSinceEpoch(timeNumber * 1000).toString();
+  }
+
+  void ViewActivity(String id, String token) async{
+    //print("succesfully----------");
+    dynamic activityViewData =
+    await networkCall.ViewManualActivityCall(token, id, 1);
+    if (activityViewData != null) {
+      print("View succesfully");
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoged', false);
+      showToastMessage('your session is expire ');
+    }
+  }
+  void showToastMessage(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0 //message font size
+    );
   }
 }

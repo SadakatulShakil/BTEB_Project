@@ -45,7 +45,6 @@ class InitState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getSharedData();
-    //getRecentCourseData();
   }
 
   @override
@@ -128,6 +127,7 @@ class InitState extends State<HomeScreen> {
           ),
         ]));
   }
+
   void showToastMessage(String message) {
     Fluttertoast.showToast(
         msg: message,
@@ -145,16 +145,9 @@ class InitState extends State<HomeScreen> {
     final uRNotificationData = await networkCall.UserUnReadNotificationCall(token, userId);
     if(uRNotificationData != null){
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
-
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
       unReadNotiList = uRNotificationData.messages!;
       allNotification.addAll(unReadNotiList);
-      setState(() {
-
-        getRNotification(token, userId);
-      });
 
     }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -169,15 +162,12 @@ class InitState extends State<HomeScreen> {
     final rNotificationData = await networkCall.UserReadNotificationCall(token, userId);
     if(rNotificationData != null){
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String message = 'Success';
-
       CommonOperation.hideProgressDialog(context);
-      //showToastMessage(message);
-      readNotiList = rNotificationData.messages!;
-      setState(() {
-        allNotification.addAll(readNotiList);
-      });
 
+      readNotiList = rNotificationData.messages!;
+      allNotification.addAll(readNotiList);
+
+      setState(() {});
     }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoged', false);
@@ -214,9 +204,7 @@ class InitState extends State<HomeScreen> {
               ListTile(
                 dense: true,
                 onTap: () {
-                  setState(() {
-                    Navigator.of(context).pop();
-                  });
+                  Navigator.of(context).pop();
                   Navigator.push(context, MaterialPageRoute(builder: (context) => SiteHomePage()));
                 },
                 leading: const Icon(
@@ -229,9 +217,6 @@ class InitState extends State<HomeScreen> {
               ),
               ListTile(
                 onTap: () {
-                  setState(() {
-                    value = 0;
-                  });
                   Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
                 },
                 leading: const Icon(
@@ -324,9 +309,8 @@ class InitState extends State<HomeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
     userId = prefs.getString('userId')!;
-    setState(() {
-      getURNotification(token, userId);
-    });
+    getURNotification(token, userId);
+    getRNotification(token, userId);
   }
 
 }

@@ -352,8 +352,12 @@ class InitState extends State<QuizViewPage> {
     final quizAccessData =
     await networkCall.QuizAccessInformationCall(token, quizId);
     if (quizAccessData != null) {
-    timeLimit = quizAccessData.accessrules!.first.toString();
-    print('============= '+ timeLimit.toString());
+      if(quizAccessData.accessrules!.length>0){
+        timeLimit = quizAccessData.accessrules![0].toString();
+      }else {
+        timeLimit = 'No time limit';
+      }
+    print('============= '+ quizAccessData.canattempt!.toString());
 
       //CommonOperation.hideProgressDialog(context);
       //showToastMessage(message);

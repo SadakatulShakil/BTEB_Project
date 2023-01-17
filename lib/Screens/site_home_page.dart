@@ -28,6 +28,7 @@ class InitState extends State<SiteHomePage> {
     'assets/images/sub4.png'
   ];
   List<dynamic> categoryList = [];
+  List<dynamic>showCategoryList = [];
   List<dynamic> subCategoryList = [];
   String token = '';
   double value = 0;
@@ -39,7 +40,6 @@ class InitState extends State<SiteHomePage> {
     // TODO: implement initState
     super.initState();
     checkconnectivity();
-    setState(() {});
   }
 
   @override
@@ -116,7 +116,7 @@ class InitState extends State<SiteHomePage> {
                             padding: const EdgeInsets.only(left: 10.0, right: 10),
                             child: Align(
                               alignment: Alignment.center,
-                                child: Text('The training courses and material offered at BTEB via the e-Learning platform caters to general knowledge transfer and professional skills development for ADN DigiNet personals', style: TextStyle(color: Colors.white),)),
+                                child: Text('The training courses and material offered at BTEB via the e-Learning platform caters to general knowledge transfer and professional skills development for BTEB personals', style: TextStyle(color: Colors.white),)),
                           ),
                         ],
                       ),
@@ -135,9 +135,9 @@ class InitState extends State<SiteHomePage> {
                           child: RefreshIndicator(
                             onRefresh: checkconnectivity,
                             child: ListView.builder(
-                                itemCount: categoryList.length,
+                                itemCount: showCategoryList.length,
                                 itemBuilder: (context, index) {
-                                  final mCategoryData = categoryList[index];
+                                  final mCategoryData = showCategoryList[index];
                                   final mImageData = courseImageList[index];
                                   return buildCategoryCourse(mCategoryData, mImageData);
                                 }),
@@ -154,9 +154,7 @@ class InitState extends State<SiteHomePage> {
   Future getSharedData() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('TOKEN')!;
-    setState(() {
-      getCategories(token);
-    });
+    Future.wait([getCategories(token)]);
   }
   Future getCategories(String token) async{
     CommonOperation.showProgressDialog(
@@ -166,12 +164,10 @@ class InitState extends State<SiteHomePage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String message = 'Success';
       categoryList = categoryListCallData;
-      //count = categoryList.length.toString();
-      print('data_count1 '+ categoryList.first.toString());
-      //showToastMessage(message);
-      setState(() {
-        CommonOperation.hideProgressDialog(context);
-      });
+      showCategoryList = categoryList.where((element) => element.parent.toString() == '0').toList();
+      print('data_count1 '+ showCategoryList.length.toString());
+      CommonOperation.hideProgressDialog(context);
+      setState(() {});
 
     }else{
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -191,110 +187,56 @@ class InitState extends State<SiteHomePage> {
   }
 
   Widget buildCategoryCourse(mCategoryData, String mImageData) =>
-      Visibility(
-        visible: mCategoryData.parent == 0,
-        child: GestureDetector(
-          onTap: (){
-            getSubCat(mCategoryData.id.toString(),mCategoryData);
-            mCategoryData.parent != 0?Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                CategoryDetailsPage(mCategoryData.name.toString(), categoryList, mCategoryData.id.toString()))):
-            Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryWiseCoursesPage(mCategoryData.id.toString())));
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 8.0, right: 8.0),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE7EAEC),
-                            borderRadius: BorderRadius.circular(22),
+      GestureDetector(
+        onTap: (){
+          getSubCat(mCategoryData.id.toString(),mCategoryData);
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16.0, right: 8.0),
+          child: Card(
+            elevation: 8,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    child: Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFFE7EAEC),
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            mCategoryData.name.toString(), style: GoogleFonts.nanumGothic(
+                            color: const Color(0xFF000000),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              mCategoryData.name.toString(), style: GoogleFonts.nanumGothic(
-                              color: const Color(0xFF000000),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w900,
-                            ),
-                            ),
                           ),
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF848484),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                          image: AssetImage(mImageData),
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF848484),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+                        image: AssetImage(mImageData),
 
-                        ),
-                      ),),
-                    // Container(
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Align(
-                    //       alignment: Alignment.centerLeft,
-                    //       child:  Wrap(
-                    //           crossAxisAlignment: WrapCrossAlignment.center,
-                    //           children: [
-                    //             Padding(
-                    //               padding: const EdgeInsets.only(left: 5.0),
-                    //               child: Text(
-                    //                 mCategoryData.name.toString(), style: GoogleFonts.comfortaa(
-                    //                 fontSize: 18,
-                    //                 fontWeight: FontWeight.w900,
-                    //               ),
-                    //               ),
-                    //             ),
-                    //           ]
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Container(
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Align(
-                    //       alignment: Alignment.centerLeft,
-                    //       child:  Wrap(
-                    //           crossAxisAlignment: WrapCrossAlignment.center,
-                    //           children: [
-                    //             const Icon(Icons.menu_book,
-                    //               color: Color(0xFF18D77E),
-                    //               size: 17,),
-                    //             Padding(
-                    //               padding: const EdgeInsets.only(left: 8.0),
-                    //               child: Text(
-                    //                 categoryList.where((element) => element.parent.toString() == mCategoryData.id.toString()).toList().length.toString()+' courses', style: GoogleFonts.comfortaa(
-                    //                 color: const Color(0xFF18D77E),
-                    //                 fontSize: 15,
-                    //                 fontWeight: FontWeight.w900,
-                    //               ),
-                    //               ),
-                    //             ),
-                    //           ]
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
-                  ],
-                ),
-              )
-              ,
+                      ),
+                    ),),
+                ],
+              ),
             )
             ,
-          ),
+          )
+          ,
         ),
       );
 
@@ -304,9 +246,7 @@ class InitState extends State<SiteHomePage> {
       getSharedData();
     }else{
       openNetworkDialog();
-      setState(() {
-
-      });
+      setState(() {});
     }
   }
   openNetworkDialog() {
@@ -342,9 +282,7 @@ class InitState extends State<SiteHomePage> {
                 onTap: (){
                   Navigator.pop(context);
                   checkconnectivity();
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -371,14 +309,12 @@ class InitState extends State<SiteHomePage> {
   void getSubCat(String catId, mCategoryData) {
     subCategoryList = categoryList.where((element) => element.parent.toString() == catId).toList();
     countSubCat = subCategoryList.length;
-    setState(() {
-      if(countSubCat>0){
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>
-            CategoryDetailsPage(mCategoryData.name.toString(), categoryList, mCategoryData.id.toString())));
-      }else{
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryWiseCoursesPage(mCategoryData.id.toString())));
-      }
-    });
+    if(countSubCat>0){
+      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+          CategoryDetailsPage(mCategoryData.name.toString(), categoryList, mCategoryData.id.toString())));
+    }else{
+      Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryWiseCoursesPage(mCategoryData.id.toString())));
+    }
     print('???? '+ countSubCat.toString());
   }
 }

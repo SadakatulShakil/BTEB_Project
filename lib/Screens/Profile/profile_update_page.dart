@@ -16,7 +16,6 @@ class InitState extends State<ProfileUpdatePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {});
   }
 
   @override
