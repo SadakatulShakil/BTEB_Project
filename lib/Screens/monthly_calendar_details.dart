@@ -38,69 +38,71 @@ class InitState extends State<MonthlyCalenderDetailsPage> {
       ),
       backgroundColor: PrimaryColor,
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
-                transform: Matrix4.translationValues(0, 10, 1),
-                decoration: BoxDecoration(
-                    color: Color(0xFFFAFAFA),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25)
-                    )
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  "assets/images/rectangle_bg.png"),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25),
-                                topRight: Radius.circular(25))),
-                        height: 70,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8, top: 20.0, right: 8),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Event Details',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.nanumGothic(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
+                  transform: Matrix4.translationValues(0, 10, 1),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFFAFAFA),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25)
+                      )
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/rectangle_bg.png"),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  topRight: Radius.circular(25))),
+                          height: 70,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8, top: 20.0, right: 8),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Event Details',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.nanumGothic(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        )),
-                    SizedBox(height: 15,),
-                    Expanded(
-                      child: Padding(
-                          padding:
-                          const EdgeInsets.only(left: 12.0, right: 12.0),
-                          child: ListView.builder(
-                              itemCount: widget.eventsList.length,
-                              itemBuilder: (context, index) {
-                                final mCourseData = widget.eventsList[index];
+                            ],
+                          )),
+                      SizedBox(height: 15,),
+                      Expanded(
+                        child: Padding(
+                            padding:
+                            const EdgeInsets.only(left: 12.0, right: 12.0),
+                            child: ListView.builder(
+                                itemCount: widget.eventsList.length,
+                                itemBuilder: (context, index) {
+                                  final mCourseData = widget.eventsList[index];
 
-                                return buildEventCourse(mCourseData);
-                              })),
-                    ),
-                  ],
-                )
-            ),
-          ],
+                                  return buildEventCourse(mCourseData);
+                                })),
+                      ),
+                    ],
+                  )
+              ),
+            ],
+          ),
         ),
       ),
     );

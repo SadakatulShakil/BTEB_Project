@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:radda_moodle_learning/Helper/colors_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
@@ -18,7 +19,6 @@ class _SplashState extends State<Splash> {
   late AnimationController controller;
   @override
   void initState() {
-    // TODO: implement initState
     print("running splash");
     super.initState();
     getSharedData();
@@ -78,7 +78,7 @@ class _SplashState extends State<Splash> {
                   child: JumpingDotsProgressIndicator(
                     fontSize: 50.0,
                     numberOfDots: 5,
-                    color: new Color(0xFFFFFFFF),
+                    color: PrimaryColor,
                     milliseconds: 120,
                   ),
                 )
@@ -91,7 +91,7 @@ class _SplashState extends State<Splash> {
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text('Technical support from ADN Diginet', style: GoogleFonts.nanumGothic(color: const Color(0xFFFFFFFF))),
+                  child: Text('Technical support from ADN Diginet', style: GoogleFonts.nanumGothic(color: PrimaryColor)),
                 )
               ],
             ),

@@ -34,7 +34,6 @@ class InitState extends State<DashBoardCoursesList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

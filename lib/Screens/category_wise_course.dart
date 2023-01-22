@@ -25,7 +25,6 @@ class InitState extends State<CategoryWiseCoursesPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getSharedData();
   }
@@ -52,56 +51,58 @@ class InitState extends State<CategoryWiseCoursesPage> {
         centerTitle: false,
       ),
       backgroundColor: PrimaryColor,
-      body: Column(
-        children: <Widget>[
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).size.height / 9,
-              transform: Matrix4.translationValues(0, 10, 1),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 15,
-                  ),
-                  categoryWiseCourseList.length > 0
-                      ? Expanded(
-                    child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 12.0, right: 12.0),
-                        child: ListView.builder(
-                            itemCount: categoryWiseCourseList.length,
-                            itemBuilder: (context, index) {
-                              final mCourseData =
-                              categoryWiseCourseList[index];
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.height / 9,
+                transform: Matrix4.translationValues(0, 10, 1),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFAFAFA),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    categoryWiseCourseList.length > 0
+                        ? Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 12.0, right: 12.0),
+                          child: ListView.builder(
+                              itemCount: categoryWiseCourseList.length,
+                              itemBuilder: (context, index) {
+                                final mCourseData =
+                                categoryWiseCourseList[index];
 
-                              return buildRecentCourse(mCourseData);
-                            })),
-                  )
-                      : Center(
-                    child: SizedBox(
-                      height: 100,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.warning_amber,
-                            size: 30,
-                          ),
-                          Text('No Data Found!'),
-                        ],
+                                return buildRecentCourse(mCourseData);
+                              })),
+                    )
+                        : Center(
+                      child: SizedBox(
+                        height: 100,
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.warning_amber,
+                              size: 30,
+                            ),
+                            Text('No Data Found!'),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )),
-        ],
+                  ],
+                )),
+          ],
+        ),
       ),
     );
   }

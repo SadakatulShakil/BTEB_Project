@@ -36,188 +36,180 @@ class _LoginScreenState extends State<LoginScreen>{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: AnimatedContainer(
-            curve: Curves.fastLinearToSlowEaseIn,
-            duration: Duration(
-              microseconds: 2000),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    child: Image.asset("assets/images/login_banner.png", fit: BoxFit.fill,),
-                  ),
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    transform: Matrix4.translationValues(0, 350, 1),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFFAFAFA),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25)
-                        )
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 32.0),
-                          child: Text("Log in to BTEB e_learning",
-                              style: GoogleFonts.nanumGothic(color: PrimaryColor,
-                                  fontSize: 20, fontWeight: FontWeight.w900)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 32.0, left: 12, right: 12),
-                          child: TextField(
-                            textInputAction: TextInputAction.next,
-                            controller: userNameController,
-                            decoration: InputDecoration(
-                              prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
-                                border: OutlineInputBorder(),
-                                labelText: 'User name',labelStyle: GoogleFonts.nanumGothic(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                            ),
-                                hintText: 'Enter user name',hintStyle: GoogleFonts.nanumGothic(
-                              fontSize: 15,
-                            )
-                            ),
-                            autofocus: false,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top:15.0, left: 12, right: 12),
-                          child: TextField(
-                            controller: passwordController,
-                            keyboardType: TextInputType.text,
-                            obscureText: !_passwordVisible,
-                            decoration: InputDecoration(
-
-                                prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    // Based on passwordVisible state choose the icon
-                                    _passwordVisible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: const Color(0xFFBDBDBD),
-                                  ),
-                                  onPressed: () {
-                                    // Update the state i.e. toogle the state of passwordVisible variable
-                                    _passwordVisible = !_passwordVisible;
-                                    setState(() {
-
-                                    });
-                                  },
-                                ),
-                                border: OutlineInputBorder(),
-                                labelText: 'Password',labelStyle: GoogleFonts.nanumGothic(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                            ),
-                                hintText: 'Enter password',hintStyle: GoogleFonts.nanumGothic(
-                              fontSize: 15,
-                            )
-                            ),
-                            autofocus: true,
-                          ),
-                        ),
-                        SizedBox(height: 8,),
-                        Visibility(
-                          visible: error == 1?true:false,
-                          child: Text("Warning: "+ 'Invalid credentials',
-                              style: GoogleFonts.nanumGothic(color: Colors.red)),
-                        ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 12.0),
-                                      child: SizedBox(
-                                        width: 15,
-                                        height: 15,
-                                        child: Material(
-                                          child: Checkbox(
-                                            value: agree,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                agree = value ?? false;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Text("Remember me",
-                                          style: GoogleFonts.nanumGothic()),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ForgetPasswordPage()));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text("Forget password?",
-                                      style: GoogleFonts.nanumGothic(color: PrimaryColor)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 25,),
-                        Padding(
-                          padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                          child: InkWell(
-                            onTap: ()async{
-                              SharedPreferences prefs = await SharedPreferences.getInstance();
-                              if(agree){
-                                await prefs.setString('userName', userNameController.text.toString());
-                                await prefs.setString('password', passwordController.text.toString());
-                              }
-                              callLoginApi(userNameController.text, passwordController.text);
-                              //agree?Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())): showToastMessage('please accept our terms & condition');
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Container(
-                                width:350,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: PrimaryColor
-                                ),
-                                child: Center(
-                                  child: Text("Log In", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                child: Image.asset("assets/images/login_banner.png", fit: BoxFit.fitWidth,),
+              ),
+            ),
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                transform: Matrix4.translationValues(0, 300, 1),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFFFFFF),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)
                     )
                 ),
-              ],
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 32.0),
+                      child: Text("Log in to BTEB e_learning",
+                          style: GoogleFonts.nanumGothic(color: PrimaryColor,
+                              fontSize: 20, fontWeight: FontWeight.w900)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 32.0, left: 12, right: 12),
+                      child: TextField(
+                        textInputAction: TextInputAction.next,
+                        controller: userNameController,
+                        decoration: InputDecoration(
+                          prefixIcon: Image.asset("assets/icons/user_icon.png", width: 20, height: 20),
+                            border: OutlineInputBorder(),
+                            labelText: 'User name',labelStyle: GoogleFonts.nanumGothic(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                            hintText: 'Enter user name',hintStyle: GoogleFonts.nanumGothic(
+                          fontSize: 15,
+                        )
+                        ),
+                        autofocus: false,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top:15.0, left: 12, right: 12),
+                      child: TextField(
+                        controller: passwordController,
+                        keyboardType: TextInputType.text,
+                        obscureText: !_passwordVisible,
+                        decoration: InputDecoration(
+
+                            prefixIcon: Image.asset("assets/icons/pass_icon.png", width: 20, height: 20),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: const Color(0xFFBDBDBD),
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                _passwordVisible = !_passwordVisible;
+                                setState(() {
+
+                                });
+                              },
+                            ),
+                            border: OutlineInputBorder(),
+                            labelText: 'Password',labelStyle: GoogleFonts.nanumGothic(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                            hintText: 'Enter password',hintStyle: GoogleFonts.nanumGothic(
+                          fontSize: 15,
+                        )
+                        ),
+                        autofocus: true,
+                      ),
+                    ),
+                    SizedBox(height: 8,),
+                    Visibility(
+                      visible: error == 1?true:false,
+                      child: Text("Warning: "+ 'Invalid credentials',
+                          style: GoogleFonts.nanumGothic(color: Colors.red)),
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 12.0),
+                                  child: SizedBox(
+                                    width: 15,
+                                    height: 15,
+                                    child: Material(
+                                      child: Checkbox(
+                                        value: agree,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            agree = value ?? false;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text("Remember me",
+                                      style: GoogleFonts.nanumGothic()),
+                                ),
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ForgetPasswordPage()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text("Forget password?",
+                                  style: GoogleFonts.nanumGothic(color: PrimaryColor)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 25,),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                      child: InkWell(
+                        onTap: ()async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          if(agree){
+                            await prefs.setString('userName', userNameController.text.toString());
+                            await prefs.setString('password', passwordController.text.toString());
+                          }
+                          callLoginApi(userNameController.text, passwordController.text);
+                          //agree?Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())): showToastMessage('please accept our terms & condition');
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Container(
+                            width:350,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: PrimaryColor
+                            ),
+                            child: Center(
+                              child: Text("Log In", style: GoogleFonts.nanumGothic(color: Colors.white, fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
             ),
-          ),
+          ],
         ),
       )
     );

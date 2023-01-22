@@ -15,7 +15,6 @@ class RecentNotificationPage extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() => InitState();
-// TODO: implement createState
 
 }
 
@@ -27,14 +26,12 @@ class InitState extends State<RecentNotificationPage> {
   NetworkCall networkCall = NetworkCall();
   @override
   void initState() {
-    // TODO: implement initState
     getSharedData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return inItWidget();
   }
 

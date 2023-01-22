@@ -42,7 +42,6 @@ class InitState extends State<HomeComponents> {
   Connectivity connectivity = Connectivity();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkconnectivity();
   }

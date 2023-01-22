@@ -64,47 +64,20 @@ class InitState extends State<DashBoardCalederList> {
     String headerText = DateFormat.MMMM().format(_focusedDay);
     print('Syear: '+ _focusedDay.year.toString()+'Smonth: '+ _focusedDay.month.toString());
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 10,),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('notSelected', DateTime.now().toString())));
-                    },
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Container(
-                        width: 130,
-                        height: 35,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: PrimaryColor),
-                        child: Center(
-                          child: Text(
-                            "Create Event",
-                            style: GoogleFonts.nanumGothic(
-                                color: Colors.white, fontSize: 13,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  Visibility(
-                    visible: widget.eventList.length>0?true:false,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => UpcomingCalenderDetailsPage(widget.eventList)));
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 10,),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCalenderEventPage('notSelected', DateTime.now().toString())));
                       },
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -118,7 +91,7 @@ class InitState extends State<DashBoardCalederList> {
                               color: PrimaryColor),
                           child: Center(
                             child: Text(
-                              "Upcoming Event " + widget.eventList.length.toString(),
+                              "Create Event",
                               style: GoogleFonts.nanumGothic(
                                   color: Colors.white, fontSize: 13,
                                   fontWeight: FontWeight.bold),
@@ -127,97 +100,126 @@ class InitState extends State<DashBoardCalederList> {
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {
-                  print(_focusedDay);
-                  pageController.previousPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOut,
-                  );
-                  _focusedDay = _focusedDay.subtract(const Duration(days: 30));
-                  print('year-: '+ _focusedDay.year.toString()+' month-: '+ _focusedDay.month.toString());
-                  setState((){});
-                },
-                icon: Icon(
-                  Icons.keyboard_arrow_left,
-                  color: Colors.black,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(headerText, style: TextStyle(color: PrimaryColor, fontSize: 18)),
-                  SizedBox(width: 8,),
-                ],
-              ),
-              IconButton(
-                onPressed: () {
-                  pageController.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOut,
-                  );
-                  _focusedDay = _focusedDay.add(const Duration(days: 30));
-                  print('year+: '+ _focusedDay.year.toString()+' month+: '+ _focusedDay.month.toString());
-                  setState((){});
-                },
-                icon: const Icon(
-                  Icons.keyboard_arrow_right,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          Card(
-            clipBehavior: Clip.antiAlias,
-            margin: EdgeInsets.all(8),
-            child: TableCalendar(
-              firstDay: DateTime.utc(DateTime.now().year,DateTime.now().month-10,DateTime.now().day),
-              lastDay: DateTime.utc(DateTime.now().year,DateTime.now().month+10,DateTime.now().day),
-              focusedDay: _focusedDay,
-              headerVisible: false,
-              onCalendarCreated: (controller) => pageController = controller,
-              onPageChanged: (focusedDay) => _focusedDay = focusedDay,
-              selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay, day);
 
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                eventsDataList.clear();
-                openDialog(getEventsForDay(selectedDay), eventsDataList, selectedDay);
-                print('-----> '+getEventsForDay(selectedDay).first.toString());
-                for (int i = 0; i < widget.eventList.length; i++) {
-                  if (DateTime.parse(getDateStump(widget.eventList[i].timesort.toString())).toString().split(" ")[0] ==
-                      DateTime.parse(getDateStump(getEventsForDay(selectedDay).first.toString())).toString().split(" ")[0]) {
-                    eventsDataList.add(widget.eventList[i]);
-                  }
-                }
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-              },
-              // holidayPredicate: (day) {
-              //   // Every 20th day of the month will be treated as a holiday
-              //   return day.weekday == 5;
-              // },
-              daysOfWeekVisible: true,
-              sixWeekMonthsEnforced: true,
-              shouldFillViewport: false,
-              headerStyle: HeaderStyle(titleTextStyle: TextStyle(fontSize: 20, color: Colors.deepPurple, fontWeight: FontWeight.w800)),
-              calendarStyle: CalendarStyle(todayTextStyle: TextStyle(fontSize:20, color: Colors.white, fontWeight: FontWeight.bold )),
-              eventLoader: getEventsForDay,
+                    Visibility(
+                      visible: widget.eventList.length>0?true:false,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => UpcomingCalenderDetailsPage(widget.eventList)));
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Container(
+                            width: 130,
+                            height: 35,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: PrimaryColor),
+                            child: Center(
+                              child: Text(
+                                "Upcoming Event " + widget.eventList.length.toString(),
+                                style: GoogleFonts.nanumGothic(
+                                    color: Colors.white, fontSize: 13,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 8.0),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    print(_focusedDay);
+                    pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    );
+                    _focusedDay = _focusedDay.subtract(const Duration(days: 30));
+                    print('year-: '+ _focusedDay.year.toString()+' month-: '+ _focusedDay.month.toString());
+                    setState((){});
+                  },
+                  icon: Icon(
+                    Icons.keyboard_arrow_left,
+                    color: Colors.black,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(headerText, style: TextStyle(color: PrimaryColor, fontSize: 18)),
+                    SizedBox(width: 8,),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () {
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    );
+                    _focusedDay = _focusedDay.add(const Duration(days: 30));
+                    print('year+: '+ _focusedDay.year.toString()+' month+: '+ _focusedDay.month.toString());
+                    setState((){});
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              margin: EdgeInsets.all(8),
+              child: TableCalendar(
+                firstDay: DateTime.utc(DateTime.now().year,DateTime.now().month-10,DateTime.now().day),
+                lastDay: DateTime.utc(DateTime.now().year,DateTime.now().month+10,DateTime.now().day),
+                focusedDay: _focusedDay,
+                headerVisible: false,
+                onCalendarCreated: (controller) => pageController = controller,
+                onPageChanged: (focusedDay) => _focusedDay = focusedDay,
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selectedDay, day);
+
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  eventsDataList.clear();
+                  openDialog(getEventsForDay(selectedDay), eventsDataList, selectedDay);
+                  //print('-----> '+getEventsForDay(selectedDay).first.toString());
+                  for (int i = 0; i < widget.eventList.length; i++) {
+                    if (DateTime.parse(getDateStump(widget.eventList[i].timesort.toString())).toString().split(" ")[0] ==
+                        DateTime.parse(getDateStump(getEventsForDay(selectedDay).first.toString())).toString().split(" ")[0]) {
+                      eventsDataList.add(widget.eventList[i]);
+                    }
+                  }
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                },
+                // holidayPredicate: (day) {
+                //   // Every 20th day of the month will be treated as a holiday
+                //   return day.weekday == 5;
+                // },
+                daysOfWeekVisible: true,
+                sixWeekMonthsEnforced: true,
+                shouldFillViewport: false,
+                headerStyle: HeaderStyle(titleTextStyle: TextStyle(fontSize: 20, color: Colors.deepPurple, fontWeight: FontWeight.w800)),
+                calendarStyle: CalendarStyle(todayTextStyle: TextStyle(fontSize:20, color: Colors.white, fontWeight: FontWeight.bold )),
+                eventLoader: getEventsForDay,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+          ],
+        ),
       ),
     );
   }

@@ -14,7 +14,6 @@ class NotificationPage extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() => InitState();
-// TODO: implement createState
 
 }
 
@@ -30,14 +29,12 @@ class InitState extends State<NotificationPage> {
   Connectivity connectivity = Connectivity();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkconnectivity();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return inItWidget();
   }
 

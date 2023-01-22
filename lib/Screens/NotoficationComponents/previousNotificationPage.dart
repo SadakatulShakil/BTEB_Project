@@ -10,7 +10,6 @@ class PreviousNotificationPage extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() => InitState();
-// TODO: implement createState
 
 }
 
@@ -19,13 +18,11 @@ class InitState extends State<PreviousNotificationPage> {
   String lassAccess ='';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return inItWidget();
   }
 

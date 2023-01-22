@@ -34,7 +34,6 @@ class InitState extends State<ContactComponents> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getSharedData();
   }
@@ -65,168 +64,170 @@ class InitState extends State<ContactComponents> {
           centerTitle: false,
         ),
         backgroundColor: PrimaryColor,
-        body: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).size.height / 9,
-              transform: Matrix4.translationValues(0, 10, 1),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25))),
-              child: Column(
-                children: [
-                  Container(
-                    height: 110,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/rectangle_bg.png"),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25))),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              child: GFButtonBadge(
-                                color: fieldVisible == 1?PrimaryColor:Color(0xFFE7EAEC),
-                                onPressed: () {
-                                  fieldVisible = 1;
-                                  setState(() {
-                                  });
-                                },
-                                text: 'My contacts',textStyle: GoogleFonts.comfortaa(
-                                  color: fieldVisible == 1?Colors.white:PrimaryColor),
-                                icon: GFBadge(
-                                  child: Text(contactsListData.length.toString()),
-                                ),
-                              ),),
-                            Container(
-                              child: GFButtonBadge(
-                                color: fieldVisible == 2?PrimaryColor:Color(0xFFE7EAEC),
-                                onPressed: () {
-                                  fieldVisible = 2;
-                                  setState(() {
-                                  });
-                                },
-                                text: 'Request',textStyle: GoogleFonts.comfortaa(
-                                  color: fieldVisible == 2?Colors.white:PrimaryColor),
-                                icon: GFBadge(
-                                  child: Text(widget.contactRequestList.length.toString()),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 18.0, top: 15, right: 18),
-                          child: SizedBox(
-                            height: 40,
-                            child: TextField(
-                              //controller: searchCtrl,
-                              textInputAction: TextInputAction.go,
-                              maxLines: 1,
-                              minLines: 1,
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: SecondaryColor,
-                                ),
-                                contentPadding: EdgeInsets.all(8),
-                                hintText: 'search',
-                                hintStyle: TextStyle(fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.height / 9,
+                transform: Matrix4.translationValues(0, 10, 1),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFAFAFA),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 110,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/rectangle_bg.png"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25))),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                child: GFButtonBadge(
+                                  color: fieldVisible == 1?PrimaryColor:Color(0xFFE7EAEC),
+                                  onPressed: () {
+                                    fieldVisible = 1;
+                                    setState(() {
+                                    });
+                                  },
+                                  text: 'My contacts',textStyle: GoogleFonts.comfortaa(
+                                    color: fieldVisible == 1?Colors.white:PrimaryColor),
+                                  icon: GFBadge(
+                                    child: Text(contactsListData.length.toString()),
+                                  ),
+                                ),),
+                              Container(
+                                child: GFButtonBadge(
+                                  color: fieldVisible == 2?PrimaryColor:Color(0xFFE7EAEC),
+                                  onPressed: () {
+                                    fieldVisible = 2;
+                                    setState(() {
+                                    });
+                                  },
+                                  text: 'Request',textStyle: GoogleFonts.comfortaa(
+                                    color: fieldVisible == 2?Colors.white:PrimaryColor),
+                                  icon: GFBadge(
+                                    child: Text(widget.contactRequestList.length.toString()),
                                   ),
                                 ),
-                                filled: true,
-                                fillColor: Colors.white,
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18.0, top: 15, right: 18),
+                            child: SizedBox(
+                              height: 40,
+                              child: TextField(
+                                //controller: searchCtrl,
+                                textInputAction: TextInputAction.go,
+                                maxLines: 1,
+                                minLines: 1,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: SecondaryColor,
+                                  ),
+                                  contentPadding: EdgeInsets.all(8),
+                                  hintText: 'search',
+                                  hintStyle: TextStyle(fontSize: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      width: 0,
+                                      style: BorderStyle.none,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Visibility(
-                    visible: fieldVisible == 1 ? true : false,
-                    child: contactsListData.length>0?Expanded(
-                      child: Padding(
-                          padding:
-                          const EdgeInsets.only(left: 12.0, right: 12.0),
-                          child: ListView.builder(
-                              itemCount: contactsListData.length,
-                              itemBuilder: (context, index) {
-                                final mChatData = contactsListData[index];
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Visibility(
+                      visible: fieldVisible == 1 ? true : false,
+                      child: contactsListData.length>0?Expanded(
+                        child: Padding(
+                            padding:
+                            const EdgeInsets.only(left: 12.0, right: 12.0),
+                            child: ListView.builder(
+                                itemCount: contactsListData.length,
+                                itemBuilder: (context, index) {
+                                  final mChatData = contactsListData[index];
 
-                                return buildChatHolderList(mChatData);
-                              })),
-                    ):Center(
-                      child: SizedBox(
-                        height: 100,
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.warning_amber,
-                              size: 30,
-                            ),
-                            Text('No Data Found!'),
-                          ],
+                                  return buildChatHolderList(mChatData);
+                                })),
+                      ):Center(
+                        child: SizedBox(
+                          height: 100,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.warning_amber,
+                                size: 30,
+                              ),
+                              Text('No Data Found!'),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Visibility(
-                    visible: fieldVisible == 2 ? true : false,
-                    child: widget.contactRequestList.length>0?Expanded(
-                      child: Padding(
-                          padding:
-                          const EdgeInsets.only(left: 12.0, right: 12.0),
-                          child: ListView.builder(
-                              itemCount: widget.contactRequestList.length,
-                              itemBuilder: (context, index) {
-                                final mContactData = widget.contactRequestList[index];
+                    Visibility(
+                      visible: fieldVisible == 2 ? true : false,
+                      child: widget.contactRequestList.length>0?Expanded(
+                        child: Padding(
+                            padding:
+                            const EdgeInsets.only(left: 12.0, right: 12.0),
+                            child: ListView.builder(
+                                itemCount: widget.contactRequestList.length,
+                                itemBuilder: (context, index) {
+                                  final mContactData = widget.contactRequestList[index];
 
-                                return buildContactRequestList(mContactData);
-                              })),
-                    ):Center(
-                      child: SizedBox(
-                        height: 100,
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.warning_amber,
-                              size: 30,
-                            ),
-                            Text('No Data Found1!'),
-                          ],
+                                  return buildContactRequestList(mContactData);
+                                })),
+                      ):Center(
+                        child: SizedBox(
+                          height: 100,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.warning_amber,
+                                size: 30,
+                              ),
+                              Text('No Data Found1!'),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

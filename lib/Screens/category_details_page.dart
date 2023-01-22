@@ -24,7 +24,6 @@ class InitState extends State<CategoryDetailsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getSubCat(widget.catId);
   }
@@ -55,75 +54,77 @@ class InitState extends State<CategoryDetailsPage> {
           centerTitle: false,
         ),
         backgroundColor: PrimaryColor,
-        body: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).size.height / 9,
-              transform: Matrix4.translationValues(0, 10, 1),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25))),
-              child: Column(
-                children: [
-                  Container(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/rectangle_bg.png"),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            topRight: Radius.circular(25))),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 8,),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(widget.name, style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0, right: 8),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text('Total papers: '+ countSubCat.toString(), style: TextStyle(color: Colors.white),)),
-                            ),
-                          ],
-                        )
-                      ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).size.height / 9,
+                transform: Matrix4.translationValues(0, 10, 1),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFAFAFA),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/rectangle_bg.png"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25))),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 8,),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(widget.name, style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0, right: 8),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text('Total papers: '+ countSubCat.toString(), style: TextStyle(color: Colors.white),)),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Align(alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15.0,right: 15, top: 8, bottom: 8),
-                      child: Text('Our Papers', style: TextStyle(color: SecondaryColor, fontSize: 18, fontWeight: FontWeight.bold),),
+                    Align(alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15.0,right: 15, top: 8, bottom: 8),
+                        child: Text('Our Papers', style: TextStyle(color: SecondaryColor, fontSize: 18, fontWeight: FontWeight.bold),),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 12,),
-                  Expanded(
-                    child: Padding(
-                        padding:
-                        const EdgeInsets.only(left: 10.0, right: 10.0),
-                        child: ListView.builder(
-                            itemCount: widget.categoryList.length,
-                            itemBuilder: (context, index) {
+                    SizedBox(height: 12,),
+                    Expanded(
+                      child: Padding(
+                          padding:
+                          const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: ListView.builder(
+                              itemCount: widget.categoryList.length,
+                              itemBuilder: (context, index) {
 
-                              final mCategoryData = widget.categoryList[index];
-                              return buildCategoryCourse(mCategoryData);
-                            })),
-                  ),
-                ],
+                                final mCategoryData = widget.categoryList[index];
+                                return buildCategoryCourse(mCategoryData);
+                              })),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

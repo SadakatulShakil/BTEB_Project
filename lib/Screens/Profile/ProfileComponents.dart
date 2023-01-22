@@ -30,7 +30,6 @@ class InitState extends State<ProfileComponents> {
   Connectivity connectivity = Connectivity();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkconnectivity();
   }
@@ -43,7 +42,7 @@ class InitState extends State<ProfileComponents> {
 
   Widget initWidget(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: PrimaryColor,
         body: Column(
@@ -162,6 +161,7 @@ class InitState extends State<ProfileComponents> {
     imageurl = prefs.getString('imageUrl')!;
     String token = prefs.getString('TOKEN')!;
     String userid = prefs.getString('userId')!;
+    print('---> '+imageurl.toString());
     Future.wait([getSiteInfo(token, userid), getProfileInfo(token, userid)]);
   }
   Future getSiteInfo(String token, String userid) async{

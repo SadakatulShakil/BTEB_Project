@@ -14,7 +14,6 @@ class ProfileUpdatePage extends StatefulWidget {
 class InitState extends State<ProfileUpdatePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

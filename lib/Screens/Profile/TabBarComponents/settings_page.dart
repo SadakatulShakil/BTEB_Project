@@ -114,7 +114,6 @@ class InitState extends State<ProfileSettingsPage> {
   final cityController = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getSharedData();
   }

@@ -43,7 +43,6 @@ class InitState extends State<AssignmentDetailsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getSharedData();
     super.initState();
   }

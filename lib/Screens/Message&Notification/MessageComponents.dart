@@ -46,7 +46,6 @@ class InitState extends State<MessageComponents> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkconnectivity();
   }

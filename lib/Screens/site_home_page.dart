@@ -37,7 +37,6 @@ class InitState extends State<SiteHomePage> {
   Connectivity connectivity = Connectivity();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkconnectivity();
   }
@@ -81,72 +80,74 @@ class InitState extends State<SiteHomePage> {
             ],
           ),
           backgroundColor: PrimaryColor,
-          body: Column(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).size.height / 9,
-                transform: Matrix4.translationValues(0, 10, 1),
-                decoration: BoxDecoration(
-                    color: Color(0xFFFAFAFA),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25))),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 130,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/rectangle_bg.png"),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25))),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Learn from anywhere', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0, right: 10),
-                            child: Align(
-                              alignment: Alignment.center,
-                                child: Text('The training courses and material offered at BTEB via the e-Learning platform caters to general knowledge transfer and professional skills development for BTEB personals', style: TextStyle(color: Colors.white),)),
-                          ),
-                        ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).size.height / 9,
+                  transform: Matrix4.translationValues(0, 10, 1),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFFAFAFA),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25))),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 130,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/rectangle_bg.png"),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25))),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Learn from anywhere', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0, right: 10),
+                              child: Align(
+                                alignment: Alignment.center,
+                                  child: Text('The training courses and material offered at BTEB via the e-Learning platform caters to general knowledge transfer and professional skills development for BTEB personals', style: TextStyle(color: Colors.white),)),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Align(alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15.0,right: 15, top: 8, bottom: 8),
-                        child: Text('Our Courses', style: TextStyle(color: SecondaryColor, fontSize: 18, fontWeight: FontWeight.bold),),
+                      Align(alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15.0,right: 15, top: 8, bottom: 8),
+                          child: Text('Our Courses', style: TextStyle(color: SecondaryColor, fontSize: 18, fontWeight: FontWeight.bold),),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10,),
-                    Expanded(
-                      child: Padding(
-                          padding:
-                          const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: RefreshIndicator(
-                            onRefresh: checkconnectivity,
-                            child: ListView.builder(
-                                itemCount: showCategoryList.length,
-                                itemBuilder: (context, index) {
-                                  final mCategoryData = showCategoryList[index];
-                                  final mImageData = courseImageList[index];
-                                  return buildCategoryCourse(mCategoryData, mImageData);
-                                }),
-                          )),
-                    ),
-                  ],
+                      SizedBox(height: 10,),
+                      Expanded(
+                        child: Padding(
+                            padding:
+                            const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: RefreshIndicator(
+                              onRefresh: checkconnectivity,
+                              child: ListView.builder(
+                                  itemCount: showCategoryList.length,
+                                  itemBuilder: (context, index) {
+                                    final mCategoryData = showCategoryList[index];
+                                    final mImageData = courseImageList[index];
+                                    return buildCategoryCourse(mCategoryData, mImageData);
+                                  }),
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );

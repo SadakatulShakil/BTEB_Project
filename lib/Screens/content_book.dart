@@ -22,7 +22,6 @@ class InitState extends State<BookContentPage> {
   NetworkCall networkCall = NetworkCall();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     ViewActivity(widget.id, widget.token);
   }
@@ -48,43 +47,45 @@ class InitState extends State<BookContentPage> {
         centerTitle: false,
       ),
       backgroundColor: PrimaryColor,
-      body: Column(
-        children: <Widget>[
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
-              transform: Matrix4.translationValues(0, 10, 1),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25)
-                  )
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 15,),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(widget.title.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                  ),
-                  SizedBox(height: 10,),
-                  Expanded(
-                    child: Padding(padding:
-                        const EdgeInsets.only(left: 12.0, right: 12.0),
-                        child: ListView.builder(
-                            itemCount: widget.bookContent.length,
-                            itemBuilder: (context, index) {
-                              final mCourseData = widget.bookContent[index];
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
+                transform: Matrix4.translationValues(0, 10, 1),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFAFAFA),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)
+                    )
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 15,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(widget.title.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    ),
+                    SizedBox(height: 10,),
+                    Expanded(
+                      child: Padding(padding:
+                          const EdgeInsets.only(left: 12.0, right: 12.0),
+                          child: ListView.builder(
+                              itemCount: widget.bookContent.length,
+                              itemBuilder: (context, index) {
+                                final mCourseData = widget.bookContent[index];
 
-                              return buildBookContent(mCourseData);
-                            })),
-                  ),
-                  SizedBox(height: 20,)
-                ],
-              )
-          ),
-        ],
+                                return buildBookContent(mCourseData);
+                              })),
+                    ),
+                    SizedBox(height: 20,)
+                  ],
+                )
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -109,7 +109,6 @@ class InitState extends State<HomeScreen> {
   }
 
   Widget menuItem(String text, String assetName) {
-    // TODO: Change the shape
     return Container(
         width: 500,
         child: Row(children: [
@@ -229,7 +228,7 @@ class InitState extends State<HomeScreen> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyVideoPlayerPage()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (context) => MyVideoPlayerPage()));
                 },
                 leading: const Icon(
                   Icons.settings,

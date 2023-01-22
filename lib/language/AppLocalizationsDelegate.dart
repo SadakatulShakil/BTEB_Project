@@ -8,7 +8,7 @@ import 'LanguagesEn.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<Languages> {
 
- // const AppLocalizationsDelegate();
+  // const AppLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) =>
@@ -24,7 +24,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<Languages> {
       case 'bn':
         return LanguageBn();
       default:
-        return LanguageBn();
+        return LanguageEn();
     }
   }
 

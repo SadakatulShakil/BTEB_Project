@@ -20,7 +20,6 @@ class ChatDashBoardScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => InitState();
-// TODO: implement createState
 
 }
 
@@ -52,7 +51,6 @@ class InitState extends State<ChatDashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return inItWidget();
   }
 

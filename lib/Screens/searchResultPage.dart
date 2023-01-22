@@ -20,7 +20,6 @@ class InitState extends State<SearchResultPage> {
   String userId ='';
   @override
   void initState() {
-    // TODO: implement initState
     getSharedData();
     super.initState();
   }

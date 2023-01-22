@@ -54,7 +54,6 @@ class InitState extends State<CourseDetailsPage> {
   Connectivity connectivity = Connectivity();
   @override
   void initState() {
-    // TODO: implement initState
     checkconnectivity();
 
     audioPlayer.onPlayerStateChanged.listen((state) {
@@ -67,7 +66,6 @@ class InitState extends State<CourseDetailsPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     audioPlayer.dispose();
     super.dispose();
   }
@@ -95,90 +93,92 @@ class InitState extends State<CourseDetailsPage> {
         ),
         backgroundColor: PrimaryColor,
         body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height -
-                      MediaQuery
-                          .of(context)
-                          .size
-                          .height / 9,
-                  transform: Matrix4.translationValues(0, 10, 1),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFFAFAFA),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25))),
-                  child: Column(
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    "assets/images/rectangle_bg.png"),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(25),
-                                  topRight: Radius.circular(25))),
-                          height: 125,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 18, top: 20.0, right: 8),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    widget.form == 'recent' ? widget.mCourseData
-                                        .fullname.toString() : widget
-                                        .mCourseData.displayname.toString(),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.nanumGothic(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height -
+                        MediaQuery
+                            .of(context)
+                            .size
+                            .height / 9,
+                    transform: Matrix4.translationValues(0, 10, 1),
+                    decoration: BoxDecoration(
+                        color: Color(0xFFFAFAFA),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25))),
+                    child: Column(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/rectangle_bg.png"),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25),
+                                    topRight: Radius.circular(25))),
+                            height: 125,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 18, top: 20.0, right: 8),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      widget.form == 'recent' ? widget.mCourseData
+                                          .fullname.toString() : widget
+                                          .mCourseData.displayname.toString(),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.nanumGothic(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 18.0, top: 10, bottom: 5),
-                                    child: Text(content1+'\n'+content2, style: GoogleFonts.nanumGothic(color: Colors.white, fontSize: 15),),
-                                  )),
-                            ],
-                          )),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            "Course Content",
-                            style: GoogleFonts.nanumGothic(fontSize: 13),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 18.0, top: 10, bottom: 5),
+                                      child: Text(content1+'\n'+content2, style: GoogleFonts.nanumGothic(color: Colors.white, fontSize: 15),),
+                                    )),
+                              ],
+                            )),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              "Course Content",
+                              style: GoogleFonts.nanumGothic(fontSize: 13),
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: RefreshIndicator(
-                          onRefresh: checkconnectivity,
-                          child: Container(
-                              width: ScreenRF.width(context),
-                              child: list()),
+                        Expanded(
+                          child: RefreshIndicator(
+                            onRefresh: checkconnectivity,
+                            child: Container(
+                                width: ScreenRF.width(context),
+                                child: list()),
+                          ),
                         ),
-                      ),
-                    ],
-                  )),
-            ],
+                      ],
+                    )),
+              ],
+            ),
           ),
         ));
   }

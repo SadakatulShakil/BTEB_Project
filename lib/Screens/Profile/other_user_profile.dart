@@ -17,7 +17,6 @@ class OtherProfileBody extends StatefulWidget {
   OtherProfileBody(this.from, this.currentUserId, this.requestId);
   @override
   State<StatefulWidget> createState() => InitState();
-// TODO: implement createState
 
 }
 
@@ -35,14 +34,12 @@ class InitState extends State<OtherProfileBody> {
   int is_accepted = 0, is_decline = 0, is_send = 0;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     getSharedData();
   }
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return inItWidget();
   }
 

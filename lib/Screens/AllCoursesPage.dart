@@ -35,39 +35,41 @@ class InitState extends State<AllCoursesPage> {
         centerTitle: false,
       ),
       backgroundColor: PrimaryColor,
-      body: Column(
-        children: <Widget>[
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
-              transform: Matrix4.translationValues(0, 10, 1),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25)
-                  )
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 15,),
-                  Expanded(
-                    child:
-                    Padding(
-                        padding:
-                        const EdgeInsets.only(left: 12.0, right: 12.0),
-                        child: ListView.builder(
-                            itemCount: widget.allCourseList.length,
-                            itemBuilder: (context, index) {
-                              final mCourseData = widget.allCourseList[index];
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height-MediaQuery.of(context).size.height/9,
+                transform: Matrix4.translationValues(0, 10, 1),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFAFAFA),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)
+                    )
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 15,),
+                    Expanded(
+                      child:
+                      Padding(
+                          padding:
+                          const EdgeInsets.only(left: 12.0, right: 12.0),
+                          child: ListView.builder(
+                              itemCount: widget.allCourseList.length,
+                              itemBuilder: (context, index) {
+                                final mCourseData = widget.allCourseList[index];
 
-                              return buildRecentCourse(mCourseData);
-                            })),
-                  ),
-                ],
-              )
-          ),
-        ],
+                                return buildRecentCourse(mCourseData);
+                              })),
+                    ),
+                  ],
+                )
+            ),
+          ],
+        ),
       ),
     );
   }

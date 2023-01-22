@@ -24,7 +24,6 @@ NetworkCall networkCall = NetworkCall();
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
